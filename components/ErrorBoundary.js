@@ -21,8 +21,6 @@ class ErrorBoundary extends React.Component {
 
     // Handle custom errors:
     // ...
-
-    super.componentDidCatch(error, info)
   }
 
   render() {
