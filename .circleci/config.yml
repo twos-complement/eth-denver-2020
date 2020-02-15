@@ -27,7 +27,8 @@ jobs:
       - run:
           name: Deploy Zeit Now - Development
           command: |
-            npx now --token $ZEIT_API_TOKEN
+            npm install -g --unsafe-perm now
+            now --token $ZEIT_API_TOKEN
 
 workflows:
   version: 2
