@@ -27,7 +27,7 @@ jobs:
       - run:
           name: Deploy Zeit Now - Development
           command: |
-            now --token $ZEIT_API_TOKEN
+            npx now --token $ZEIT_API_TOKEN
 
 workflows:
   version: 2
