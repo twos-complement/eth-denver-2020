@@ -3,7 +3,9 @@
   "scope": "twoscomplement",
   "build": {
     "env": {
-      "FORTMATIC_API_KEY": "@fortmatic-api-key"
+      "FORTMATIC_API_KEY": "@fortmatic-api-key",
+      "INFURA_ETH_GATEWAY": "@infura-eth-gateway",
+      "MNEMONIC": "@mnemonic"
     }
   }
 }
