@@ -1,0 +1,16 @@
+name: deploy development website
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: ./
+        id: now-development-deployment
+        with:
+          zeit-token: ${{ secrets.ZEIT_TOKEN }}
+          # now-args: '--prod'
