@@ -2,10 +2,6 @@
   "name": "eth-denver-2020",
   "version": 2,
   "scope": "twoscomplement",
-  "public": false,
-  "github": {
-    "enabled": false
-  },
   "build": {
     "env": {
       "FORTMATIC_API_KEY": "@fortmatic-api-key"
