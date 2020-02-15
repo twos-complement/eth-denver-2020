@@ -12,6 +12,7 @@
     "dotenv": "^8.2.0",
     "fortmatic": "^2.0.0-beta.9",
     "next": "9.2.1",
+    "profile-hover": "^1.1.1",
     "react": "16.12.0",
     "react-dom": "16.12.0",
     "styled-components": "^5.0.1",
