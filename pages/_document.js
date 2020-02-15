@@ -22,10 +22,10 @@ export default class MyDocument extends Document {
         ...initialProps,
         isProduction,
         styles: (
-          <>
+          <Fragment>
             {initialProps.styles}
             {sheet.getStyleElement()}
-          </>
+          </Fragment>
         ),
       }
     } finally {
