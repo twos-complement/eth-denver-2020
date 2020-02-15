@@ -9,6 +9,9 @@ const ProfileHover = dynamic(
   { ssr: false }
 )
 
+import { Button } from '@material-ui/core';
+
+
 const Dashboard = ({ auth: { account, logout }, box: { box } }) => {
   return (
     <div>
@@ -20,7 +23,7 @@ const Dashboard = ({ auth: { account, logout }, box: { box } }) => {
     
       <ProfileHover address={account} />
 
-      <div onClick={logout}>Logout</div>
+      <Button color="primary" variant="contained" onClick={logout}>Logout</Button>
     </div>
   )
 }

@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import Fortmatic from 'fortmatic'
 import Web3 from 'web3'
 
-const AuthContext = React.createContext()
+import { AuthContext } from '../../components/context'
 
 function loadAccount(fm) {
   return new Promise(async (resolve, reject) => {

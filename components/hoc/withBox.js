@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Box from '3box'
 
-const BoxContext = React.createContext()
+import { BoxContext } from '../../components/context'
 
 export const BoxProvider = props => {
   const [box, setBox] = useState()
