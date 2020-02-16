@@ -6,12 +6,16 @@ import { BoxContext } from '../../components/context'
 export const BoxProvider = props => {
   const [box, setBox] = useState()
   const [profile, setProfile] = useState()
+  const [isLoading, setIsLoading] = useState(false)
 
   function loadBox(auth) {
+    setIsLoading(true);
     Box.getProfile(auth.account).then(profile => setProfile(profile))
 
     Box.openBox(auth.account, auth.fm.getProvider()).then(box => {
       setBox(box)
+
+      setIsLoading(false);
     })
   }
 
@@ -21,6 +25,7 @@ export const BoxProvider = props => {
         box,
         loadBox,
         profile,
+        isLoading,
       }}
     >
       {props.children}
@@ -32,13 +37,14 @@ const withBox = Component => {
   return props => (
     <BoxContext.Consumer>
       {context => {
-        if (!context.box) {
-          console.log(props.auth.fm)
+        if (!context.box && !context.isLoading) {
           // Box not loaded, begin loading, using fm from auth provider:
           context.loadBox(props.auth)
           return <p>Loading Box...</p>
         }
-
+        else if (context.isLoading) {
+          return <p>Loading Box......</p>
+        }
         // Box loaded, render:
         return <Component {...props} box={context} />
       }}
