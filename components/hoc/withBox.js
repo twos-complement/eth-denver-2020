@@ -5,8 +5,11 @@ import { BoxContext } from '../../components/context'
 
 export const BoxProvider = props => {
   const [box, setBox] = useState()
+  const [profile, setProfile] = useState()
 
   function loadBox(auth) {
+    Box.getProfile(auth.account).then(profile => setProfile(profile))
+
     Box.openBox(auth.account, auth.fm.getProvider()).then(box => {
       setBox(box)
     })
@@ -17,6 +20,7 @@ export const BoxProvider = props => {
       value={{
         box,
         loadBox,
+        profile,
       }}
     >
       {props.children}
