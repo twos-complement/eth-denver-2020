@@ -8,6 +8,7 @@ import {
   Typography,
 } from '@material-ui/core';
 import Notifications from '../components/views/Notifications';
+import NavLayout from '../components/layouts/NavLayout'
 
 const NotificationsHeader = styled(Typography)`${({ theme: {dp, ...theme}, ...props }) => css`
   color: ${theme.colors.neutral050};
@@ -29,23 +30,25 @@ const NotificationsPage = ({
   isLoading,
  }) => {
   const { notificationsSpace } = notifications;
-  const { account } = auth;
+  const { account, logout } = auth;
   const { profile } = box;
 
   if (isLoading)
     return <Loader>Loading topics...</Loader>
 
   return (
-    <Page>
-      <NotificationsHeader variant="h4">Messages</NotificationsHeader>
+    <NavLayout logout={logout} account={account}>
+      <Page>
+        <NotificationsHeader variant="h4">Messages</NotificationsHeader>
 
-      <Notifications
-        notificationsSpace={notificationsSpace}
-        myProfile={profile}
-        myAddress={account}
-        myDid={notifications.did}
-      />
-    </Page>
+        <Notifications
+          notificationsSpace={notificationsSpace}
+          myProfile={profile}
+          myAddress={account}
+          myDid={notifications.did}
+        />
+      </Page>
+    </NavLayout>
   );
 }
 

@@ -20,6 +20,8 @@ import MenuIcon from '@material-ui/icons/Menu'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
+import SurroundSoundIcon from '@material-ui/icons/SurroundSound';
+import NotificationsIcon from '@material-ui/icons/Notifications';
 
 const drawerWidth = 240
 
@@ -89,6 +91,7 @@ function Nav(props) {
             <ListItemText primary="Home" />
           </Link>
         </ListItem>
+
         <ListItem button>
           <ListItemIcon>
             <HomeIcon />
@@ -97,8 +100,28 @@ function Nav(props) {
             <ListItemText primary="Upload Document" />
           </Link>
         </ListItem>
+
+        <ListItem button>
+          <ListItemIcon>
+            <NotificationsIcon />
+          </ListItemIcon>
+          <Link href="/feed">
+            <ListItemText primary="Notifications" />
+          </Link>
+        </ListItem>
+
+        <ListItem button>
+          <ListItemIcon>
+            <SurroundSoundIcon />
+          </ListItemIcon>
+          <Link href="/notifications">
+            <ListItemText primary="Broadcast Alert" />
+          </Link>
+        </ListItem>
       </List>
+
       <Divider />
+
       <List>
         <ListItem button>
           <ListItemIcon>

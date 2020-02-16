@@ -8,6 +8,7 @@ import {
   Typography,
 } from '@material-ui/core';
 import Feed from '../components/views/Feed';
+import NavLayout from '../components/layouts/NavLayout'
 
 const FeedHeader = styled(Typography)`${({ theme: {dp, ...theme}, ...props }) => css`
   color: ${theme.colors.neutral050};
@@ -29,25 +30,25 @@ const FeedPage = ({
   isLoading,
  }) => {
   const { notificationsSpace } = notifications;
-  const { account } = auth;
+  const { account, logout } = auth;
   const { profile } = box;
 
   if (isLoading)
     return <Loader>Loading topics...</Loader>
 
-  console.log(profile, account);
-
   return (
-    <Page>
-      <FeedHeader variant="h4">Messages</FeedHeader>
+    <NavLayout logout={logout} account={account}>
+      <Page>
+        <FeedHeader variant="h4">Messages</FeedHeader>
 
-      <Feed
-        notificationsSpace={notificationsSpace}
-        myProfile={profile}
-        myAddress={account}
-        myDid={notifications.did}
-      />
-    </Page>
+        <Feed
+          notificationsSpace={notificationsSpace}
+          myProfile={profile}
+          myAddress={account}
+          myDid={notifications.did}
+        />
+      </Page>
+    </NavLayout>
   );
 }
 
