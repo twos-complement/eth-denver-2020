@@ -20,11 +20,7 @@ export function signMessage({ message, account, web3 }) {
       },
       function(error, resp) {
         if (error) throw error
-        resolve({
-          account,
-          message,
-          signature: resp.result,
-        })
+        resolve(resp.result)
       },
     )
   })

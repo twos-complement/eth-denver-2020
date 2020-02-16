@@ -39,7 +39,7 @@ const DropzoneContainer = styled.div`
   `}
 `
 
-const Dropzone = ({ web3, account }) => {
+const Dropzone = ({ web3, account, onComplete, space }) => {
   const {
     getRootProps,
     acceptedFiles,
@@ -73,32 +73,46 @@ const Dropzone = ({ web3, account }) => {
           <Button
             color="default"
             variant="contained"
-            onClick={() => {
-              upload({
+            onClick={async () => {
+              // Upload file to Pinata/IPFS:
+              const uploadResp = await upload({
                 file: acceptedFiles[0],
               })
-                .then(resp => resp.json())
-                .then(ipfsData =>
-                  signMessage({
-                    message: {
-                      ipfsData,
-                      account,
-                    },
-                    account,
-                    web3,
-                  }),
-                )
-                .then(({ account, message, signature }) => {
-                  console.log('signed', account, message, signature)
-                  return registerFile({ account, message, signature })
-                })
-                .then(resp => resp.json())
-                .then(data => {
-                  console.log('register file resp:', data)
-                })
-                .catch(function(error) {
-                  if (error) throw error
-                })
+              const uploadData = await uploadResp.json()
+              const message = {
+                ipfsData: uploadData,
+                account,
+              }
+
+              // Sign IPFS response:
+              const signature = await signMessage({
+                message,
+                account,
+                web3,
+              })
+
+              // Register file with the state/ethereum:
+              const registerFileResp = await registerFile({
+                account,
+                message,
+                signature,
+              })
+              const registerFileData = await registerFileResp.json()
+
+              // Save registration eth transaction to 3box space:
+              const fileList = (await space.public.get('files')) || []
+              await space.public.set(
+                'files',
+                fileList.concat({
+                  txHash: registerFileData.txHash,
+                  ipfsHash: uploadData.IpfsHash,
+                }),
+              )
+
+              // Callback:
+              onComplete({
+                txHash: registerFileData.txHash,
+              })
             }}
           >
             Upload
