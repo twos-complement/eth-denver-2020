@@ -2,7 +2,7 @@ import {
   getBytes32FromIpfsHash,
   getIpfsHashFromBytes32,
 } from '../../util/hashMod'
-import { contract } from '../../util/web3'
+import { contract } from '../../util/web3-server'
 
 export default async (req, res) => {
   // TODO: pass search filter from arguments:

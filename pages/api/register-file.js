@@ -1,22 +1,26 @@
 import { getBytes32FromIpfsHash } from '../../util/hashMod'
-import { web3, contract, GAS_PRICE } from '../../util/web3'
+import { web3, contract, GAS_PRICE } from '../../util/web3-server'
 
 export default async (req, res) => {
-  const accounts = await web3.eth.getAccounts()
-  const account = accounts[0]
-
-  //TODO pull from request:
-  const userAddress = '0x44109BA56b94B0d040f4FbFE0F01bbC492CB4A2D'
-  const ipfsHash = 'QmdLEBQ5vL6jFUMgdD75K7He7p8fP8jQxMkSkWvpPbshiu'
+  const adminAccounts = await web3.eth.getAccounts()
+  const adminAccount = adminAccounts[0]
+  const body = JSON.parse(req.body)
+  const userAddress = body.account
+  const ipfsHash = body.message.ipfsData.IpfsHash
   const bytes32IpfsHash = getBytes32FromIpfsHash(ipfsHash)
 
-  //TODO have user sign arguments and verify signature here:
+  // Verify user's signature:
+  const signature = body.signature
+  const message = JSON.stringify(body.message)
+  const signedByAddress = web3.eth.accounts.recover(message, signature)
+  if (userAddress !== signedByAddress)
+    throw new Error('User address does not match signature validation!')
 
   //TODO verify IPFS hash hasn't already been registered before:
 
   let resp = await contract.methods
     .registerFile(userAddress, bytes32IpfsHash)
-    .send({ from: account, gasPrice: GAS_PRICE })
+    .send({ from: adminAccount, gasPrice: GAS_PRICE })
 
   console.log(
     `Transaction submitted, using ${resp.gasUsed} gas, at block number ${resp.blockNumber}.`,
