@@ -26,7 +26,7 @@ const theme = {
     neutral300: '#90A4AE',
     neutral200: '#B0BEC5',
     neutral100: '#CFD8DC',
-    neutral050: '#ECEFF1',
+    neutral050: '#FFFFFF',
 
     warning500: '#FF6D00',
     warning400: '#FF9100',
