@@ -10,9 +10,9 @@ const ABI = [
       },
       {
         indexed: true,
-        internalType: 'string',
-        name: '_ipfsHash',
-        type: 'string',
+        internalType: 'bytes32',
+        name: '_bytes32IpfsHash',
+        type: 'bytes32',
       },
     ],
     name: 'FileRegistered',
@@ -26,9 +26,9 @@ const ABI = [
         type: 'address',
       },
       {
-        internalType: 'string',
-        name: '_ipfsHash',
-        type: 'string',
+        internalType: 'bytes32',
+        name: '_bytes32IpfsHash',
+        type: 'bytes32',
       },
     ],
     name: 'registerFile',
@@ -37,4 +37,5 @@ const ABI = [
     type: 'function',
   },
 ]
+
 export default ABI
