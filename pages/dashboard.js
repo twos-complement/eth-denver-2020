@@ -4,6 +4,7 @@ import styled, { css } from 'styled-components'
 import withBox from '../components/hoc/withBox'
 import withAuth from '../components/hoc/withAuth'
 import UserFileList from '../components/UserFileList'
+import ProfileQRCode from '../components/ui/ProfileQRCode'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
 
@@ -48,6 +49,8 @@ const Dashboard = ({ auth: { account, logout }, box: { box, space } }) => {
           </Button>
         </Link>
       </UploadSection>
+
+      <ProfileQRCode address={account} />
     </div>
   )
 }
