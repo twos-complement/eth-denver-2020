@@ -5,6 +5,7 @@ import Web3 from 'web3'
 
 import { AuthContext } from '../../components/context'
 import { Loader } from '../../components/ui'
+import FullPagePhoto from '../../components/ui/FullPagePhoto'
 
 function loadWeb3(fm) {
   return new Promise(async (resolve, reject) => {
@@ -49,13 +50,16 @@ export const AuthProvider = props => {
       value={{
         account,
         loadAccount: () => {
-          setIsLoadingAuth(true);
+          setIsLoadingAuth(true)
 
           loadWeb3(fm)
-            .then(web3Provider => new Promise(async (resolve, reject) => {
-              setWeb3(web3Provider)
-              resolve(web3Provider)
-            }))
+            .then(
+              web3Provider =>
+                new Promise(async (resolve, reject) => {
+                  setWeb3(web3Provider)
+                  resolve(web3Provider)
+                }),
+            )
             .then(loadAccount)
             .then(setAccount)
             .finally(() => setIsLoadingAuth(false))
@@ -79,14 +83,30 @@ const withAuth = Component => {
         if (!context.account && !context.isLoadingAuth) {
           // First time in, load account using fortmatic/web3:
           context.loadAccount()
-          return <Loader>Loading Auth...</Loader>
-        }
-        else if (context.isLoadingAuth) {
-          return <Loader>Loading Auth......</Loader>
-        }
-        else if (context.isLoggingOut) {
+          return (
+            <FullPagePhoto>
+              <Loader subText="Unlocking your profile with Fortmatic">
+                Authenticating...
+              </Loader>
+            </FullPagePhoto>
+          )
+        } else if (context.isLoadingAuth) {
+          return (
+            <FullPagePhoto>
+              <Loader subText="Unlocking your profile with Fortmatic">
+                Authenticating...
+              </Loader>
+            </FullPagePhoto>
+          )
+        } else if (context.isLoggingOut) {
           // Currently logging out, show loader:
-          return <Loader>Logging out...</Loader>
+          return (
+            <FullPagePhoto>
+              <Loader subText="Logging out of your Fortmatic account">
+                Logging out...
+              </Loader>
+            </FullPagePhoto>
+          )
         }
 
         // User logged in and account resolved, render children:

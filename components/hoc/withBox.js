@@ -3,6 +3,7 @@ import Box from '3box'
 
 import { BoxContext } from '../../components/context'
 import { Loader } from '../../components/ui'
+import FullPagePhoto from '../../components/ui/FullPagePhoto'
 
 export const BoxProvider = props => {
   const [box, setBox] = useState()
@@ -46,7 +47,13 @@ const withBox = Component => {
         }
 
         if (!context.box || !context.space) {
-          return <Loader>Loading 3Box Box and Space...</Loader>
+          return (
+            <FullPagePhoto>
+              <Loader subText="Unpacking your data from IPFS with 3Box">
+                Loading Account...
+              </Loader>
+            </FullPagePhoto>
+          )
         }
 
         // Box loaded, render:
