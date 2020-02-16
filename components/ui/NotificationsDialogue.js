@@ -13,6 +13,11 @@ const Buttons = styled.div`${({ theme: {dp, ...theme}, ...props }) => css`
   padding: ${dp(32)} ${dp(16)};
 `}`;
 
+const NotificationsDialogueContainer = styled.div`${({ theme: {dp, ...theme}, ...props }) => css`
+  padding: ${dp(12)};
+`}`;
+
+
 const NotificationsDialogue = (
 {
   myDid,
@@ -23,7 +28,7 @@ const NotificationsDialogue = (
   const [message, setMessage] = useState('');
 
   return (
-    <div>
+    <NotificationsDialogueContainer>
       {!!threadData.length && threadData.map(post => (
         <Notification
           post={post}
@@ -32,7 +37,7 @@ const NotificationsDialogue = (
           myAddress={myAddress}
         />
       ))}
-    </div>
+    </NotificationsDialogueContainer>
   );
 }
 

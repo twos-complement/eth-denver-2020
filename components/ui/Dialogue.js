@@ -29,6 +29,11 @@ const Buttons = styled.div`${({ theme: {dp, ...theme}, ...props }) => css`
   grid-column-gap: ${dp(15)};
 `}`;
 
+const DialogueContainer = styled.div`${({ theme: {dp, ...theme}, ...props }) => css`
+  padding: ${dp(12)};
+`}`;
+
+
 const Dialogue = (
 {
   myDid,
@@ -55,7 +60,7 @@ const Dialogue = (
   }
 
   return (
-    <div>
+    <DialogueContainer>
       {!!threadData.length && threadData.map(post => (
         <Notification
           post={post}
@@ -87,7 +92,7 @@ const Dialogue = (
           onClick={postThread}
         >Send</Button>
       </Buttons>
-    </div>
+    </DialogueContainer>
   );
 }
 

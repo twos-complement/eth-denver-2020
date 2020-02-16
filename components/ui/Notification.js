@@ -8,6 +8,7 @@ import styled, { css } from 'styled-components';
 import { timeSince, elipsisText } from '../../util/helpers';
 import dynamic from 'next/dynamic'
 import { renderTextAsParagraphs } from '../../util/typography';
+import ReadReceipt from '../../components/ui/ReadReceipt';
 
 const ProfileAvatar = dynamic(() => import('./ProfileAvatar'), { ssr: false });
 
@@ -23,6 +24,13 @@ const NotificationProfile = styled.div`${({ theme: {dp, ...theme}, ...props }) =
   }
 `}`;
 
+const NotificationMessage = styled(Typography)`${({ theme: {dp, ...theme}, ...props }) => css`
+  padding-left: ${dp(68)};
+`}`;
+
+const ReadReceiptContainer = styled.div`${({ theme: {dp, ...theme}, ...props }) => css`
+  display: grid;
+`}`;
 
 const Notification = (
 {
@@ -49,7 +57,14 @@ const Notification = (
         }
       </NotificationProfile>
 
-      <Typography variant="h6">{renderTextAsParagraphs(expandedMessage)}</Typography> <Typography variant="caption">{timeSince(timestamp * 1000)}</Typography>
+      <NotificationMessage variant="body1">{renderTextAsParagraphs(expandedMessage)}</NotificationMessage>
+
+      <NotificationMessage variant="caption">{timeSince(timestamp * 1000)}</NotificationMessage>
+
+
+      <ReadReceiptContainer>
+        <ReadReceipt />
+      </ReadReceiptContainer>
     </NotificationPaper>
   );
 }

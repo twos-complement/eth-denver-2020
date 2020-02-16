@@ -9,8 +9,7 @@ const AvatarHolder = styled.div`${({ size, theme: {dp, ...theme}, ...props }) =>
   right: ${dp(16)};
   width: ${dp(size)};
   height: ${dp(size)};
-  margin-top: ${dp(4)};
-  margin-bottom: ${dp(18)};
+  margin-right: ${dp(8)};
   border-radius: 50%;
   box-sizing: content-box;
   border: ${dp(1.5)} solid ${theme.colors.primary050};

@@ -13,8 +13,14 @@ const AvatarSection = styled.div`${({ theme: {dp, ...theme}, ...props }) => css`
   width: 100%;
   display: grid;
   grid-template-columns: auto 1fr;
+  align-items: flex-end;
 `}`;
 
+const AvatarName = styled(Typography)`${({ theme: {dp, ...theme}, ...props }) => css`
+  && {
+    font-weight: 500;
+  }
+`}`;
 
 const ProfileAvatar = (
 {
@@ -60,7 +66,7 @@ const ProfileAvatar = (
         <Avatar url={image} />
       </AvatarContainer>
 
-      <Typography variant="subtitle2">{profileName}</Typography>
+      <AvatarName variant="h5">{profileName}</AvatarName>
     </AvatarSection>
   );
 }
