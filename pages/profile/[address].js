@@ -16,7 +16,7 @@ const Profile = () => {
       <h1>Profile {address}</h1>
       <UserFileList
         fetchFiles={async () => {
-          const space = await Box.getSpace(address, 'rock-a-bye-babies')
+          const space = await Box.getSpace(address, process.env.SPACE_NAME)
           return space.files
         }}
       />

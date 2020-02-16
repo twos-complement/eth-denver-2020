@@ -8,5 +8,6 @@ module.exports = {
     PINATA_API_KEY: process.env.PINATA_API_KEY,
     PINATA_SECRET_API_KEY: process.env.PINATA_SECRET_API_KEY,
     PINATA_API_URL: process.env.PINATA_API_URL,
+    SPACE_NAME: process.env.SPACE_NAME,
   },
 }

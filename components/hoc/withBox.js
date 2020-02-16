@@ -16,7 +16,7 @@ export const BoxProvider = props => {
     setProfile(profile)
     const box = await Box.openBox(auth.account, auth.fm.getProvider())
     setBox(box)
-    const space = await box.openSpace('rock-a-bye-babies')
+    const space = await box.openSpace(process.env.SPACE_NAME)
     setSpace(space)
     setIsLoading(false)
   }

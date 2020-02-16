@@ -4,7 +4,7 @@ const FileList = ({ fileList }) => (
   <div>
     {fileList.map(file => (
       <div key={file.txHash}>
-        {file.txHash}
+        {file.title}
         <a href={`https://rinkeby.etherscan.io/tx/${file.txHash}`}>
           View TX on Etherescan
         </a>

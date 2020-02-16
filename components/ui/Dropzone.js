@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useDropzone } from 'react-dropzone'
 import styled, { css } from 'styled-components'
 import { Button } from '@material-ui/core'
@@ -40,6 +41,7 @@ const DropzoneContainer = styled.div`
 `
 
 const Dropzone = ({ web3, account, onComplete, space }) => {
+  const [title, setTitle] = useState()
   const {
     getRootProps,
     acceptedFiles,
@@ -60,6 +62,13 @@ const Dropzone = ({ web3, account, onComplete, space }) => {
         <input {...getInputProps()} />
         <p>Drag 'n' drop some files here, or click to select files</p>
       </DropzoneContainer>
+
+      <input
+        type="text"
+        name="title"
+        placeholder="Filename"
+        onChange={e => setTitle(e.target.value)}
+      />
 
       {isHasFilesToUpload && (
         <aside>
@@ -106,6 +115,7 @@ const Dropzone = ({ web3, account, onComplete, space }) => {
                 fileList.concat({
                   txHash: registerFileData.txHash,
                   ipfsHash: uploadData.IpfsHash,
+                  title: title || `New File ${new Date().getTime()}`,
                 }),
               )
 
