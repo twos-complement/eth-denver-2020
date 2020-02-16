@@ -8,17 +8,17 @@ export const BoxProvider = props => {
   const [box, setBox] = useState()
   const [space, setSpace] = useState()
   const [profile, setProfile] = useState()
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoadingBox, setIsLoadingBox] = useState(false)
 
   async function loadBox(auth) {
-    setIsLoading(true)
+    setIsLoadingBox(true)
     const profile = await Box.getProfile(auth.account)
     setProfile(profile)
     const box = await Box.openBox(auth.account, auth.fm.getProvider())
     setBox(box)
     const space = await box.openSpace(process.env.SPACE_NAME)
     setSpace(space)
-    setIsLoading(false)
+    setIsLoadingBox(false)
   }
 
   return (
@@ -28,7 +28,7 @@ export const BoxProvider = props => {
         space,
         loadBox,
         profile,
-        isLoading,
+        isLoadingBox,
       }}
     >
       {props.children}
@@ -40,7 +40,7 @@ const withBox = Component => {
   return props => (
     <BoxContext.Consumer>
       {context => {
-        if (!context.box && !context.isLoading) {
+        if (!context.box && !context.isLoadingBox) {
           // Box not loaded, begin loading, using fm from auth provider:
           context.loadBox(props.auth)
         }

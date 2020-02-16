@@ -2,6 +2,7 @@ import App from 'next/app'
 
 import { AuthProvider } from '../components/hoc/withAuth'
 import { BoxProvider } from '../components/hoc/withBox'
+import { NotificationsProvider } from '../components/hoc/withNotifications'
 import ErrorBoundary from '../components/errors/ErrorBoundary'
 import PublicLayout from '../components/layouts/PublicLayout';
 
@@ -39,7 +40,9 @@ class MyApp extends App {
             <PublicLayout>
               <AuthProvider>
                 <BoxProvider>
-                  <Component {...pageProps} />
+                  <NotificationsProvider>
+                    <Component {...pageProps} />
+                  </NotificationsProvider>
                 </BoxProvider>
               </AuthProvider>
             </PublicLayout>
