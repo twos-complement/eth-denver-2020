@@ -54,6 +54,18 @@ const muiTheme = ({ dp, ...theme }) => ({
       '50' : theme.colors.neutral050,
     },
   },
+
+  overrides: {
+    MuiPaper: {
+      root: {
+        padding: `${dp(24)} ${dp(40)}`,
+      },
+
+      rounded: {
+        borderRadius: dp(18),
+      }
+    },
+  }
 });
 
 export default muiTheme;
