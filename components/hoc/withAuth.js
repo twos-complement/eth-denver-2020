@@ -49,13 +49,16 @@ export const AuthProvider = props => {
       value={{
         account,
         loadAccount: () => {
-          setIsLoading(true);
+          setIsLoading(true)
 
           loadWeb3(fm)
-            .then(web3Provider => new Promise(async (resolve, reject) => {
-              setWeb3(web3Provider)
-              resolve(web3Provider)
-            }))
+            .then(
+              web3Provider =>
+                new Promise(async (resolve, reject) => {
+                  setWeb3(web3Provider)
+                  resolve(web3Provider)
+                }),
+            )
             .then(loadAccount)
             .then(setAccount)
             .finally(() => setIsLoading(false))
@@ -80,11 +83,9 @@ const withAuth = Component => {
           // First time in, load account using fortmatic/web3:
           context.loadAccount()
           return <Loader>Loading Auth...</Loader>
-        }
-        else if (context.isLoading) {
+        } else if (context.isLoading) {
           return <Loader>Loading Auth......</Loader>
-        }
-        else if (context.isLoggingOut) {
+        } else if (context.isLoggingOut) {
           // Currently logging out, show loader:
           return <Loader>Logging out...</Loader>
         }

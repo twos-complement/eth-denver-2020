@@ -3,7 +3,7 @@ import React from 'react'
 import styled, { css } from 'styled-components'
 import withBox from '../components/hoc/withBox'
 import withAuth from '../components/hoc/withAuth'
-import FileList from '../components/FileList'
+import UserFileList from '../components/UserFileList'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
 
@@ -25,6 +25,9 @@ const Dashboard = ({ auth: { account, logout }, box: { box, space } }) => {
         Welcome! Your Fortmatic ETH address is: <strong>{account}</strong>, and
         your 3Box Box DID is: <strong>{box.DID}</strong>.
       </p>
+      <Link href={`/profile/${account}`}>
+        <a>Link to your Public Profile</a>
+      </Link>
 
       <ProfileHover address={account} />
 
@@ -32,7 +35,11 @@ const Dashboard = ({ auth: { account, logout }, box: { box, space } }) => {
         Logout
       </Button>
 
-      <FileList space={space} />
+      <UserFileList
+        fetchFiles={() => {
+          return space.public.get('files')
+        }}
+      />
 
       <UploadSection>
         <Link href="/upload">
