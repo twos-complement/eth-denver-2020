@@ -13,7 +13,11 @@ const Wrapper = styled.div`
 `
 
 const ProfileWrapper = styled.div`
-  padding: 25px 50px 50px;
+  padding: 40px 40px 50px 60px;
+`
+
+const QRWrapper = styled.div`
+  padding: 25px 40px 0 45px;
 `
 
 const SideBar = ({ account }) => {
@@ -28,7 +32,10 @@ const SideBar = ({ account }) => {
         />
       </ProfileWrapper>
 
-      <ProfileQRCode address={account} />
+      <QRWrapper>
+        <ProfileQRCode address={account} />
+      </QRWrapper>
+
       <Link href={`/profile/${account}`}>
         <a>Link to your Public Profile</a>
       </Link>

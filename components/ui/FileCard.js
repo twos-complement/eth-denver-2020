@@ -43,9 +43,9 @@ const FileCard = ({ file }) => {
     <Wrapper>
       <Thumbnail src={ipfsUrl} />
       <Typography variant="h6">{file.title}</Typography>
-      <p>{timestamp && moment(timestamp * 1000).fromNow()}</p>
+      <p>✅ {timestamp && moment(timestamp * 1000).fromNow()}</p>
       <a href={`https://rinkeby.etherscan.io/tx/${file.txHash}`}>
-        View TX on Etherescan
+        View on Etherescan
       </a>
     </Wrapper>
   )
