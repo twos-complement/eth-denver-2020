@@ -9,7 +9,7 @@ import { timeSince, elipsisText } from '../../util/helpers';
 import dynamic from 'next/dynamic'
 import { renderTextAsParagraphs } from '../../util/typography';
 
-const ProfileAvatar = dynamic(() => import('./ProfileAvatar'), { ssr: false })
+const ProfileAvatar = dynamic(() => import('./ProfileAvatar'), { ssr: false });
 
 const NotificationPaper = styled.div`${({ theme: {dp, ...theme}, ...props }) => css`
   && {
