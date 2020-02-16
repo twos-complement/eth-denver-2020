@@ -40,7 +40,7 @@ class Feed extends Component {
 
       console.log(topic);
 
-      const thread = await notificationsSpace.joinThread(topic, { firstModerator: "0x644C24B64803A618a6435442fd9Fa3e01853c8e6", members: true });
+      const thread = await notificationsSpace.joinThread(topic, { firstModerator: "0x447771da701C1405BfFf8E5D70ae8223f8E1a0c3", members: true });
 
       openTopics[topic] = thread;
 
@@ -90,6 +90,7 @@ class Feed extends Component {
 
     const {
       myProfile,
+      myAddress,
       myDid,
     } = this.props;
 
@@ -101,6 +102,7 @@ class Feed extends Component {
         <NotificationsDialogue
           threadData={threadData}
           activeTopic={activeTopic}
+          myAddress={"0x447771da701C1405BfFf8E5D70ae8223f8E1a0c3"}
           myDid={myDid}
         />
 

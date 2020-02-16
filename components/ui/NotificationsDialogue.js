@@ -25,6 +25,7 @@ const NotificationsDialogue = (
   myDid,
   threadData,
   activeTopic,
+  myAddress,
 }) => {
   const [message, setMessage] = useState('');
 
@@ -36,6 +37,7 @@ const NotificationsDialogue = (
           post={post}
           did={myDid}
           key={post.postId}
+          myAddress={myAddress}
         />
       ))}
     </div>
