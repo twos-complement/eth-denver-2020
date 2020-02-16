@@ -1,8 +1,10 @@
 import React from 'react'
 
+import styled, { css } from 'styled-components';
 import withBox from '../components/hoc/withBox'
 import withAuth from '../components/hoc/withAuth'
 import dynamic from 'next/dynamic'
+import Link from 'next/link'
 
 const ProfileHover = dynamic(
   () => import('profile-hover'),
@@ -10,6 +12,10 @@ const ProfileHover = dynamic(
 )
 
 import { Button } from '@material-ui/core';
+
+const UploadSection = styled.div`${({ theme: {bp, dp, ...theme}, ...props }) => css`
+  margin-top: ${dp(60)};
+`}`;
 
 
 const Dashboard = ({ auth: { account, logout }, box: { box } }) => {
@@ -24,6 +30,16 @@ const Dashboard = ({ auth: { account, logout }, box: { box } }) => {
       <ProfileHover address={account} />
 
       <Button color="primary" variant="contained" onClick={logout}>Logout</Button>
+
+      <UploadSection>
+        <Link href="/upload">
+          <Button
+            variant="contained"
+            size="medium"
+            color="secondary"
+          >Upload a Registration</Button>
+        </Link>      
+      </UploadSection>
     </div>
   )
 }

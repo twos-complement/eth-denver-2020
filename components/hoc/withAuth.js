@@ -5,11 +5,18 @@ import Web3 from 'web3'
 
 import { AuthContext } from '../../components/context'
 
-function loadAccount(fm) {
+function loadWeb3(fm) {
   return new Promise(async (resolve, reject) => {
     let fmProvider = fm.getProvider()
     let web3 = new Web3(fmProvider)
 
+    resolve(web3)
+  })
+}
+
+function loadAccount(web3) {
+  console.log("Load accpimt", web3)
+  return new Promise(async (resolve, reject) => {
     let accounts = await web3.currentProvider.enable()
     let mainAccount = accounts[0]
     resolve(mainAccount)
@@ -17,9 +24,11 @@ function loadAccount(fm) {
 }
 
 export const AuthProvider = props => {
+  const [web3, setWeb3] = useState()
   const [account, setAccount] = useState()
   const [fm, setFm] = useState()
   const [isLoggingOut, setIsLoggingOut] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
   if (!fm && typeof window !== 'undefined') {
     if (!process.env.FORTMATIC_API_KEY) {
@@ -40,9 +49,19 @@ export const AuthProvider = props => {
       value={{
         account,
         loadAccount: () => {
-          loadAccount(fm).then(setAccount)
+          setIsLoading(true);
+
+          loadWeb3(fm)
+            .then(web3Provider => new Promise(async (resolve, reject) => {
+              setWeb3(web3Provider)
+              resolve(web3Provider)
+            }))
+            .then(loadAccount)
+            .then(setAccount)
+            .finally(() => setIsLoading(false))
         },
         logout,
+        isLoading,
         isLoggingOut,
         fm,
       }}
@@ -56,11 +75,15 @@ const withAuth = Component => {
   const component = props => (
     <AuthContext.Consumer>
       {context => {
-        if (!context.account) {
+        if (!context.account && !context.isLoading) {
           // First time in, load account using fortmatic/web3:
           context.loadAccount()
           return <p>Loading Auth...</p>
-        } else if (context.isLoggingOut) {
+        }
+        else if (context.isLoading) {
+          return <p>Loading Auth...</p>
+        }
+        else if (context.isLoggingOut) {
           // Currently logging out, show loader:
           return <p>Logging out...</p>
         }
