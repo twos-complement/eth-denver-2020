@@ -4,6 +4,7 @@ import Fortmatic from 'fortmatic'
 import Web3 from 'web3'
 
 import { AuthContext } from '../../components/context'
+import { Loader } from '../../components/ui'
 
 function loadWeb3(fm) {
   return new Promise(async (resolve, reject) => {
@@ -78,14 +79,14 @@ const withAuth = Component => {
         if (!context.account && !context.isLoading) {
           // First time in, load account using fortmatic/web3:
           context.loadAccount()
-          return <p>Loading Auth...</p>
+          return <Loader>Loading Auth...</Loader>
         }
         else if (context.isLoading) {
-          return <p>Loading Auth......</p>
+          return <Loader>Loading Auth......</Loader>
         }
         else if (context.isLoggingOut) {
           // Currently logging out, show loader:
-          return <p>Logging out...</p>
+          return <Loader>Logging out...</Loader>
         }
 
         // User logged in and account resolved, render children:

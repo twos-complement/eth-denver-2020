@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import Box from '3box'
 
 import { BoxContext } from '../../components/context'
+import { Loader } from '../../components/ui'
 
 export const BoxProvider = props => {
   const [box, setBox] = useState()
@@ -40,10 +41,10 @@ const withBox = Component => {
         if (!context.box && !context.isLoading) {
           // Box not loaded, begin loading, using fm from auth provider:
           context.loadBox(props.auth)
-          return <p>Loading Box...</p>
+          return <Loader>Loading Box...</Loader>
         }
         else if (context.isLoading) {
-          return <p>Loading Box......</p>
+          return <Loader>Loading Box......</Loader>
         }
         // Box loaded, render:
         return <Component {...props} box={context} />

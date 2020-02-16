@@ -3,6 +3,7 @@ import withBox from '../components/hoc/withBox'
 import withAuth from '../components/hoc/withAuth'
 import { TopicManagerABI } from '../util/constants';
 import { GAS_PRICE } from '../util/web3'
+import { Loader } from '../components/ui'
 
 // import Chat from './ui/views/Chat';
 
@@ -82,6 +83,9 @@ class Notifications extends Component {
       isLoading,
     } = this.state;
     const { auth: { account, web3 }, box: { box, profile } } = this.props;
+
+    if (isLoading)
+      return <Loader>Loading topics...</Loader>
 
     return (
       <div>
