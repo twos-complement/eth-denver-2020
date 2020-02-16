@@ -13,13 +13,13 @@ const Content = styled.div`
   }
 `
 
-const NavLayout = ({ children, logout }) => {
+const NavLayout = ({ children, logout, account }) => {
   return (
     <div>
       <Nav logout={logout} />
       <Content>
         <div>{children}</div>
-        <SideBar />
+        <SideBar account={account} />
       </Content>
     </div>
   )

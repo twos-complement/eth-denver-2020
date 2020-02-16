@@ -14,6 +14,7 @@ import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
 import PublishIcon from '@material-ui/icons/Publish'
+import HomeIcon from '@material-ui/icons/Home'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp'
 import MenuIcon from '@material-ui/icons/Menu'
 import Toolbar from '@material-ui/core/Toolbar'
@@ -83,6 +84,14 @@ function Nav(props) {
         <ListItem button>
           <ListItemIcon>
             <PublishIcon />
+          </ListItemIcon>
+          <Link href="/dashboard">
+            <ListItemText primary="Home" />
+          </Link>
+        </ListItem>
+        <ListItem button>
+          <ListItemIcon>
+            <HomeIcon />
           </ListItemIcon>
           <Link href="/upload">
             <ListItemText primary="Upload Document" />
