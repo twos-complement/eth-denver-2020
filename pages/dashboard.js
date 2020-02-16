@@ -7,6 +7,7 @@ import UserFileList from '../components/UserFileList'
 import ProfileQRCode from '../components/ui/ProfileQRCode'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
+import NavLayout from '../components/layouts/NavLayout'
 
 const ProfileHover = dynamic(() => import('profile-hover'), { ssr: false })
 
@@ -20,7 +21,7 @@ const UploadSection = styled.div`
 
 const Dashboard = ({ auth: { account, logout }, box: { box, space } }) => {
   return (
-    <div>
+    <NavLayout logout={logout}>
       <h1>Dashboard</h1>
       <p>
         Welcome! Your Fortmatic ETH address is: <strong>{account}</strong>, and
@@ -28,10 +29,6 @@ const Dashboard = ({ auth: { account, logout }, box: { box, space } }) => {
       </p>
 
       <ProfileHover address={account} />
-
-      <Button color="primary" variant="contained" onClick={logout}>
-        Logout
-      </Button>
 
       <UserFileList
         fetchFiles={() => {
@@ -51,7 +48,7 @@ const Dashboard = ({ auth: { account, logout }, box: { box, space } }) => {
       <Link href={`/profile/${account}`}>
         <a>Link to your Public Profile</a>
       </Link>
-    </div>
+    </NavLayout>
   )
 }
 

@@ -1,23 +1,23 @@
-import React from 'react';
-import styled, { css } from 'styled-components';
+import React from 'react'
+import styled, { css } from 'styled-components'
 
-import { Scrollbar } from '../../components/ui';
+import { Scrollbar } from '../../components/ui'
 
-const Layout = styled.div`${({ theme: {dp, ...theme}, ...props }) => css`
-  height: 100%;
-  width: 100%;
-  overflow: hidden;
-  position: absolute;
-`}`;
+const Layout = styled.div`
+  ${({ theme: { dp, ...theme }, ...props }) => css`
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    position: absolute;
+  `}
+`
 
-const PublicLayout = ({ children, }) => {
+const PublicLayout = ({ children }) => {
   return (
     <Layout>
-      <Scrollbar>
-        {children}
-      </Scrollbar>
+      <Scrollbar>{children}</Scrollbar>
     </Layout>
-  );
-};
+  )
+}
 
-export default PublicLayout;
+export default PublicLayout

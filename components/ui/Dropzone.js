@@ -5,6 +5,12 @@ import { Button } from '@material-ui/core'
 import { signMessage } from '../../util/web3'
 import { upload } from '../../util/pinata'
 import { registerFile } from '../../util/http'
+import TextField from '@material-ui/core/TextField'
+
+const Wrapper = styled.div`
+  display: grid;
+  grid-row-gap: 20px;
+`
 
 const getColor = ({ isDragAccept, isDragReject, isDragActive }) => {
   if (isDragAccept) {
@@ -54,8 +60,10 @@ const Dropzone = ({ web3, account, onComplete, space }) => {
 
   const isHasFilesToUpload = acceptedFiles.length > 0
 
+  console.log(files)
+
   return (
-    <div>
+    <Wrapper>
       <DropzoneContainer
         {...getRootProps({ isDragActive, isDragAccept, isDragReject })}
       >
@@ -63,19 +71,13 @@ const Dropzone = ({ web3, account, onComplete, space }) => {
         <p>Drag 'n' drop some files here, or click to select files</p>
       </DropzoneContainer>
 
-      <input
+      <TextField
         type="text"
         name="title"
         placeholder="Filename"
         onChange={e => setTitle(e.target.value)}
+        variant="outlined"
       />
-
-      {isHasFilesToUpload && (
-        <aside>
-          <h4>Files</h4>
-          <ul>{files}</ul>
-        </aside>
-      )}
 
       {isHasFilesToUpload && (
         <div>
@@ -129,7 +131,7 @@ const Dropzone = ({ web3, account, onComplete, space }) => {
           </Button>
         </div>
       )}
-    </div>
+    </Wrapper>
   )
 }
 
