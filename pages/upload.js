@@ -7,7 +7,7 @@ import Link from 'next/link'
 import { Button } from '@material-ui/core';
 import { Dropzone } from '../components/ui';
 
-const UploadRegistrationPage = ({ auth: { account, logout }, box: { box } }) => {
+const UploadRegistrationPage = ({ auth: { account, logout, web3 }, box: { box } }) => {
   return (
     <div>
       <h1>Upload a Document</h1>
@@ -15,7 +15,7 @@ const UploadRegistrationPage = ({ auth: { account, logout }, box: { box } }) => 
         Welcome! Upload a Business Registration document.
       </p>
     
-      <Dropzone />
+      <Dropzone web3={web3} account={account} />
     </div>
   )
 }

@@ -15,7 +15,6 @@ function loadWeb3(fm) {
 }
 
 function loadAccount(web3) {
-  console.log("Load accpimt", web3)
   return new Promise(async (resolve, reject) => {
     let accounts = await web3.currentProvider.enable()
     let mainAccount = accounts[0]
@@ -63,6 +62,7 @@ export const AuthProvider = props => {
         logout,
         isLoading,
         isLoggingOut,
+        web3,
         fm,
       }}
     >
@@ -81,7 +81,7 @@ const withAuth = Component => {
           return <p>Loading Auth...</p>
         }
         else if (context.isLoading) {
-          return <p>Loading Auth...</p>
+          return <p>Loading Auth......</p>
         }
         else if (context.isLoggingOut) {
           // Currently logging out, show loader:

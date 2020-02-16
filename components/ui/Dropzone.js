@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 import { Button } from '@material-ui/core';
 import fetch from 'isomorphic-fetch'
 import FormData from 'form-data';
+const ethUtil = require('ethereumjs-util');
 
 const getColor = ({
   isDragAccept,
@@ -42,6 +43,8 @@ const DropzoneContainer = styled.div`${({ theme: {bp, dp, ...theme}, ...props })
 
 const Dropzone = (
 {
+  web3,
+  account,
 }) => {
   const {
     getRootProps,
@@ -72,15 +75,13 @@ const Dropzone = (
       {
         isHasFilesToUpload &&
         <div>
-          <Button color="success" variant="contained" onClick={() => {
-            const url = `https://api.pinata.cloud/pinning/pinFileToIPFS`;
+          <Button color="default" variant="contained" onClick={() => {
+            const url = `${process.env.PINATA_API_URL}/pinning/pinFileToIPFS`;
             const file = acceptedFiles[0];
-            //we gather a local file for this example, but any valid readStream source will work here.
+
             let data = new FormData();
             data.append('file', file);
 
-            //You'll need to make sure that the metadata is in the form of a JSON object that's been convered to a string
-            //metadata is optional
             const metadata = JSON.stringify({
                 name: file.path,
                 keyvalues: { }
@@ -88,14 +89,14 @@ const Dropzone = (
 
             data.append('pinataMetadata', metadata);
 
-            //pinataOptions are optional
             const pinataOptions = JSON.stringify({
-                cidVersion: 0
+              cidVersion: 0
             });
 
             data.append('pinataOptions', pinataOptions);     
 
-            return fetch(url,
+            return fetch(
+              url,
               {
                 headers: {
                   'pinata_api_key': process.env.PINATA_API_KEY,
@@ -104,12 +105,50 @@ const Dropzone = (
                 method: 'POST',
                 body: data
               }
-            ).then(function (response) {
-                //handle response here
-            }).catch(function (error) {
-                //handle error here
+            )
+            .then(async function (response) {
+              const ipfsData = await response.json()
+
+              const confirmation = {
+                ipfsData,
+                account,
+              }
+
+              const confirmationPayload = JSON.stringify(confirmation)
+
+              console.log("Confirmation Payload", confirmationPayload)
+
+              const msg = ethUtil.bufferToHex(new Buffer(confirmationPayload, 'utf8'));
+              const params = [msg, account];
+              const method = 'personal_sign';
+             
+              web3
+                .currentProvider
+                .sendAsync(
+                  {
+                    id: 1,
+                    method,
+                    params,
+                    account,
+                  },
+                  function(error, signatureResponse) {
+                    if (error)
+                      throw error;
+
+                    const { result } = signatureResponse;
+
+                    console.log(`Signature: ${result}`);
+                  }
+                );                
+            })
+            .catch(function (error) {
+              if (error)
+                throw error;
             });                   
-          }}>Upload</Button>
+          }}
+          >
+          Upload
+          </Button>
         </div>
       }
 
