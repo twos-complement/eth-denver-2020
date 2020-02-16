@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import Box from '3box'
 
 import { BoxContext } from '../../components/context'
+import { Loader } from '../../components/ui'
 
 export const BoxProvider = props => {
   const [box, setBox] = useState()
@@ -45,7 +46,7 @@ const withBox = Component => {
         }
 
         if (!context.box || !context.space) {
-          return <p>Loading 3Box Box and Space...</p>
+          return <Loader>Loading 3Box Box and Space...</Loader>
         }
 
         // Box loaded, render:

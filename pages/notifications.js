@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import withBox from '../components/hoc/withBox'
 import withAuth from '../components/hoc/withAuth'
 import { TopicManagerABI } from '../util/constants';
+import { GAS_PRICE } from '../util/web3'
+import { Loader } from '../components/ui'
 
 // import Chat from './ui/views/Chat';
 
@@ -16,26 +18,26 @@ class Notifications extends Component {
       topicManager: {},
       isLoading: false,
     };
+
+    this.handleLogin = (async () => { 
+      this.setState({isLoading: true})
+
+      const { auth: { account, web3 }, box: { box, profile } } = props;
+
+      // fetch initial topics
+      await this.getChatContractAndTopics(web3, account);
+
+      const chatSpace = await box.openSpace('3chat')
+      const myDid = chatSpace.DID;
+
+      // set all to state and continue
+      this.setState({ chatSpace, myDid, profile, isLoading: false });
+    }).bind(this)
   }
 
-  componetDidUpdate() {
-    if (!this.state.myDid)
-      handleLogin()
-  }
-
-  handleLogin = async () => { 
-    this.setState({isLoading: true})
-
-    const { auth: { account, web3 }, box: { box, profile } } = this.props;
-
-    // fetch initial topics
-    this.getChatContractAndTopics(web3);
-
-    const chatSpace = await box.openSpace('3chat')
-    const myDid = chatSpace.DID;
-
-    // set all to state and continue
-    this.setState({ chatSpace, myDid, profile, isLoading: false });
+  componentDidMount() {
+    if (!this.state.myDid && !this.state.isLoading)
+      this.handleLogin()
   }
 
   // add topic to ui list
@@ -47,19 +49,29 @@ class Notifications extends Component {
   }
 
 
-  getChatContractAndTopics = (web3) => {
-    const topicManager = web3.eth  // eslint-disable-line
-      .contract(TopicManagerABI).at('0x0DE48af0d52f16B15d8Db6dAf015917AAf09F481');
+  getChatContractAndTopics = async (web3, account) => {
+    const topicManager = new web3.eth  // eslint-disable-line
+      .Contract(TopicManagerABI, '0x0DE48af0d52f16B15d8Db6dAf015917AAf09F481');
 
     // get chat topics
-    const getTopics = (i, err, topic) => {
+    const getTopics = async (i, err, topic) => {
       if (err) return
       if (topic) this.addToTopicList(topic)
-      topicManager.topics(i, getTopics.bind(getTopics, ++i));
+
+      try {
+        await topicManager
+          .methods
+          .topics(i)
+          .call({}, getTopics.bind(getTopics, ++i));
+      }      
+      catch (e) {
+        // Invalid index, no more topics
+      }
+
       this.setState({ topicManager });
     }
 
-    getTopics(0);
+    await getTopics(0);
   }
 
   render() {
@@ -72,9 +84,12 @@ class Notifications extends Component {
     } = this.state;
     const { auth: { account, web3 }, box: { box, profile } } = this.props;
 
+    if (isLoading)
+      return <Loader>Loading topics...</Loader>
+
     return (
       <div>
-        Notifications {myDid} {JSON.stringify(profile)}
+        Notifications {myDid} {JSON.stringify(profile)} {JSON.stringify(topicList)}
       </div>
     );
   }
