@@ -9,5 +9,6 @@ module.exports = {
     PINATA_SECRET_API_KEY: process.env.PINATA_SECRET_API_KEY,
     PINATA_API_URL: process.env.PINATA_API_URL,
     SPACE_NAME: process.env.SPACE_NAME,
+    INFURA_ETH_GATEWAY: process.env.INFURA_ETH_GATEWAY,
   },
 }
