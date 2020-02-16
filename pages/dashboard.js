@@ -26,9 +26,6 @@ const Dashboard = ({ auth: { account, logout }, box: { box, space } }) => {
         Welcome! Your Fortmatic ETH address is: <strong>{account}</strong>, and
         your 3Box Box DID is: <strong>{box.DID}</strong>.
       </p>
-      <Link href={`/profile/${account}`}>
-        <a>Link to your Public Profile</a>
-      </Link>
 
       <ProfileHover address={account} />
 
@@ -51,6 +48,9 @@ const Dashboard = ({ auth: { account, logout }, box: { box, space } }) => {
       </UploadSection>
 
       <ProfileQRCode address={account} />
+      <Link href={`/profile/${account}`}>
+        <a>Link to your Public Profile</a>
+      </Link>
     </div>
   )
 }
