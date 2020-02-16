@@ -1,7 +1,12 @@
 import React from 'react'
+import styled from 'styled-components'
 import { useRouter } from 'next/router'
 import Box from '3box'
 import UserFileList from '../../components/UserFileList'
+
+const Wrapper = styled.div`
+  padding: 80px;
+`
 
 const Profile = () => {
   const router = useRouter()
@@ -12,7 +17,7 @@ const Profile = () => {
   }
 
   return (
-    <div>
+    <Wrapper>
       <h1>Profile {address}</h1>
       <UserFileList
         fetchFiles={async () => {
@@ -20,7 +25,7 @@ const Profile = () => {
           return space.files
         }}
       />
-    </div>
+    </Wrapper>
   )
 }
 
