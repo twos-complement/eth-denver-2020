@@ -34,7 +34,8 @@ const Dialogue = (
   myDid,
   threadData,
   activeTopic,
-  updateThreadError
+  updateThreadError,
+  myAddress,
 }) => {
   const [message, setMessage] = useState('');
 
@@ -60,6 +61,7 @@ const Dialogue = (
           post={post}
           did={myDid}
           key={post.postId}
+          myAddress={myAddress}
         />
       ))}
 

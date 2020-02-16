@@ -91,6 +91,7 @@ class Notifications extends Component {
 
     const {
       myProfile,
+      myAddress,
       myDid,
     } = this.props;
 
@@ -103,6 +104,7 @@ class Notifications extends Component {
           updateThreadError={this.updateThreadError}
           threadData={threadData}
           activeTopic={activeTopic}
+          myAddress={myAddress}
           myDid={myDid}
         />
 
