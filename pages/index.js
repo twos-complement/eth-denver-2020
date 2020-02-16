@@ -24,7 +24,11 @@ const Home = () => {
   return (
     <FullPagePhoto>
       <Wrapper>
-        <img src="/mycolorado-welcome-logo.png" />
+        <img
+          src="/mycolorado-welcome-logo.svg"
+          width="300"
+          style={{ paddingBottom: '30px' }}
+        />
         <Link href="/dashboard">
           <Button color="default" variant="contained">
             Login

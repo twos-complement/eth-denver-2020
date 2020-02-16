@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled, { css, keyframes } from 'styled-components'
 
 import withBox from '../components/hoc/withBox'
@@ -22,25 +22,25 @@ const UploadRegistrationPage = ({
   auth: { account, logout, web3 },
   box: { box, space },
 }) => {
+  const [uploadData, setUploadData] = useState()
+
+  console.log(uploadData)
+
   return (
     <NavLayout logout={logout}>
-      <Wrapper>
-        <h1>Upload a Document</h1>
-        <p>
-          Congratulations on your new business!
-          <br />
-          As a business, any documents you upload will be available to the
-          public.
-        </p>
-        <Dropzone
-          web3={web3}
-          account={account}
-          space={space}
-          onComplete={opts => {
-            console.log('rendering ui for opts', opts)
-          }}
-        />
-      </Wrapper>
+      {!uploadData && (
+        <Wrapper>
+          <Dropzone
+            web3={web3}
+            account={account}
+            space={space}
+            onComplete={opts => {
+              setUploadData(opts)
+            }}
+          />
+        </Wrapper>
+      )}
+      {uploadData && <p>uploaded!!</p>}
     </NavLayout>
   )
 }

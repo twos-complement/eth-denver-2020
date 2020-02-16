@@ -71,26 +71,32 @@ const LoadingSubText = styled(Typography)`
   `}
 `
 
-const Loader = ({ children, subText }) => (
-  <Wrapper>
-    <LoadingText variant="h4">{children}</LoadingText>
+const Loader = ({ children, subText, hideWrapper = false }) => {
+  function render() {
+    return (
+      <>
+        <LoadingText variant="h4">{children}</LoadingText>
 
-    <LoaderContainer>
-      <div>
-        <div>
+        <LoaderContainer>
           <div>
             <div>
               <div>
-                <div></div>
+                <div>
+                  <div>
+                    <div></div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
-    </LoaderContainer>
+        </LoaderContainer>
 
-    {subText && <LoadingSubText>{subText}</LoadingSubText>}
-  </Wrapper>
-)
+        {subText && <LoadingSubText>{subText}</LoadingSubText>}
+      </>
+    )
+  }
+  if (hideWrapper) return render()
+  return <Wrapper>{render()}</Wrapper>
+}
 
 export default Loader
