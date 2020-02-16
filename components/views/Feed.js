@@ -1,14 +1,59 @@
 import React, { Component } from 'react';
+import styled, { css } from 'styled-components';
 
 import NotificationsDialogue from '../../components/ui/NotificationsDialogue';
 import { Loader } from '../../components/ui'
-
+import {
+  Typography,
+  Paper,
+} from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
+
+const FeedContainer = styled.div`${({ theme: {dp, ...theme}, ...props }) => css`
+  display: grid;
+  grid-template-columns: ${dp(350)} auto;
+  grid-column-gap: ${dp(15)};
+  height: 100%;
+`}`;
+
+const ThreadTopics = styled.div`${({ theme: {dp, ...theme}, ...props }) => css`
+  padding: ${dp(12)};
+  background-color: ${theme.colors.primary700};
+`}`;
+
+const topics = [
+  {
+    title: 'State of Colorado',
+    severity: 'Critical',
+  },
+  {
+    title: 'Small Business Association',
+    severity: 'Non-Critical',
+  },
+  {
+    title: 'Secretary of State',
+    severity: 'Non-Critical',
+  },
+]
+
+const TopicHeader = styled(Typography)`${({ isSelected, theme: {dp, ...theme}, ...props }) => css`
+  color: ${isSelected ? theme.colors.primary900 : theme.colors.primary100};
+`}`;
+
+const TopicPaper = styled(Paper)`${({ isSelected, theme: {dp, ...theme}, ...props }) => css`
+  && {
+    background-color: ${isSelected ? theme.colors.neutral050 : theme.colors.primary700};
+    box-shadow: none;
+    border-radius: ${dp(8)};
+  }
+`}`;
+
 
 class Feed extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      selectedTopic: 'State of Colorado',
       activeTopic: null,
       openTopics: {},
       threadData: [],
@@ -85,6 +130,7 @@ class Feed extends Component {
       openTopics,
       activeTopic,
       threadACError,
+      selectedTopic,
       isLoading
     } = this.state;
 
@@ -98,7 +144,16 @@ class Feed extends Component {
       return <Loader>Loading thread...</Loader>
 
     return (
-      <div>
+      <FeedContainer>     
+        <ThreadTopics>
+          {topics.map(topic => (
+            <TopicPaper isSelected={selectedTopic === topic.title} key={topic.title}>
+              <TopicHeader isSelected={selectedTopic === topic.title} variant="h6">{topic.title}</TopicHeader>
+              <Typography variant="body2">{topic.severity}</Typography>
+            </TopicPaper>
+          ))}
+        </ThreadTopics>
+
         <NotificationsDialogue
           threadData={threadData}
           activeTopic={activeTopic}
@@ -106,7 +161,7 @@ class Feed extends Component {
           myDid={myDid}
         />
 
-      </div>
+      </FeedContainer>
     );
   }
 }

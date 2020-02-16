@@ -8,7 +8,7 @@ import { detectScrollbarWidth } from '../../util/helpers';
 const ScrollbarContainer = styled.div`${({ isScrollEnabled, scrollbarWidth, theme: {bp, dp, ...theme}, ...props }) => css`
   height: 100%;
   overflow-x: hidden;
-  overflow-y: scroll;
+  overflow-y: auto;
   margin: ${dp(0)} -${scrollbarWidth || 0}px ${dp(0)} ${dp(0)};
   -webkit-overflow-scrolling: touch;
 `}`;

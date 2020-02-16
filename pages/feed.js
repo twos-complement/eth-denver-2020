@@ -2,9 +2,25 @@ import React, { Component } from 'react';
 import withBox from '../components/hoc/withBox'
 import withAuth from '../components/hoc/withAuth'
 import withNotifications from '../components/hoc/withNotifications'
+import styled, { css } from 'styled-components';
 import { Loader } from '../components/ui'
-
+import {
+  Typography,
+} from '@material-ui/core';
 import Feed from '../components/views/Feed';
+
+const FeedHeader = styled(Typography)`${({ theme: {dp, ...theme}, ...props }) => css`
+  color: ${theme.colors.neutral050};
+  background-color: ${theme.colors.primary500};
+
+  && {
+    padding: ${dp(64)} 0 ${dp(30)} ${dp(30)};
+  }
+`}`;
+
+const Page = styled.div`${({ theme: {dp, ...theme}, ...props }) => css`
+  height: 100%;
+`}`;
 
 const FeedPage = ({ 
   notifications,
@@ -22,14 +38,16 @@ const FeedPage = ({
   console.log(profile, account);
 
   return (
-    <div>
+    <Page>
+      <FeedHeader variant="h4">Messages</FeedHeader>
+
       <Feed
         notificationsSpace={notificationsSpace}
         myProfile={profile}
         myAddress={account}
         myDid={notifications.did}
       />
-    </div>
+    </Page>
   );
 }
 
