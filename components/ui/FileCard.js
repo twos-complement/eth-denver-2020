@@ -22,6 +22,7 @@ const Thumbnail = styled.div`
   background-repeat: no-repeat;
   width: 100%;
   height: 100px;
+  margin-bottom: 20px;
 `
 
 const FileCard = ({ file }) => {

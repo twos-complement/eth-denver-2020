@@ -8,6 +8,12 @@ import { registerFile } from '../../util/http'
 import TextField from '@material-ui/core/TextField'
 import Loader from './Loader'
 
+async function wait(ms) {
+  return new Promise(resolve => {
+    setTimeout(resolve, ms)
+  })
+}
+
 const Wrapper = styled.div`
   display: grid;
 `
@@ -111,7 +117,7 @@ const Dropzone = ({ web3, account, onComplete, space }) => {
 
     // Save registration eth transaction to 3box space:
     setLoader({
-      title: 'Updaing Profile',
+      title: 'Updating Profile',
       subText: 'Adding file to your 3Box space',
     })
     const fileList = (await space.public.get('files')) || []
@@ -123,11 +129,19 @@ const Dropzone = ({ web3, account, onComplete, space }) => {
         title: title || `New File ${new Date().getTime()}`,
       }),
     )
+    // Let user understand profile update:
+    await wait(2000)
 
     // Callback:
-    onComplete({
-      txHash: registerFileData.txHash,
+    setLoader({
+      title: 'Success!',
+      subText: 'Redirecting back to your documents',
     })
+    setTimeout(() => {
+      onComplete({
+        txHash: registerFileData.txHash,
+      })
+    }, 3000)
   }
 
   function renderForm() {

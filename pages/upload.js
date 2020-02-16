@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { withRouter } from 'next/router'
 import styled, { css, keyframes } from 'styled-components'
 
 import withBox from '../components/hoc/withBox'
@@ -21,13 +22,12 @@ const Wrapper = styled.div`
 const UploadRegistrationPage = ({
   auth: { account, logout, web3 },
   box: { box, space },
+  router,
 }) => {
   const [uploadData, setUploadData] = useState()
 
-  console.log(uploadData)
-
   return (
-    <NavLayout logout={logout}>
+    <NavLayout logout={logout} account={account}>
       {!uploadData && (
         <Wrapper>
           <Dropzone
@@ -35,7 +35,8 @@ const UploadRegistrationPage = ({
             account={account}
             space={space}
             onComplete={opts => {
-              setUploadData(opts)
+              router.push('/dashboard')
+              //setUploadData(opts)
             }}
           />
         </Wrapper>
@@ -45,4 +46,4 @@ const UploadRegistrationPage = ({
   )
 }
 
-export default withAuth(withBox(UploadRegistrationPage))
+export default withRouter(withAuth(withBox(UploadRegistrationPage)))
